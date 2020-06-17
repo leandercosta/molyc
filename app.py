@@ -63,11 +63,17 @@ frameArea = h*w
 areaTH = frameArea/250
 print( 'Threshold', areaTH)
 
-line_up = int(2*(h/5))
-line_down   = int(3*(h/5))
+#line_up = int(2*(h/5))
+#line_down   = int(3*(h/5))
 
-up_limit =   int(1*(h/5))
-down_limit = int(4*(h/5))
+line_up = 200
+line_down = 230
+
+up_limit = 140
+down_limit = 290
+
+#up_limit =   int(1*(h/5))
+#down_limit = int(4*(h/5))
 
 print( "ENTRADA:",str(line_down))
 print( "SAIDA:", str(line_up))
