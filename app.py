@@ -2,7 +2,7 @@ import numpy as np
 import cv2 as cv
 import Person
 import time
-
+import imutils
 
 
 import sqlite3
@@ -12,7 +12,7 @@ from sqlite3 import Error
 # CONFIG DO CLIENTE
 
 clientId = 234
-spotId = 1
+spotId = 2
 
 # CONFIG DO CLIENTE
 
@@ -57,10 +57,11 @@ key = True
 for i in range(19):
     print( i, cap.get(i))
 
-h = 480
-w = 640
+h = 600
+w = 800
+
 frameArea = h*w
-areaTH = frameArea/250
+areaTH = frameArea/150
 print( 'Threshold', areaTH)
 
 #line_up = int(2*(h/5))
@@ -69,8 +70,8 @@ print( 'Threshold', areaTH)
 line_up = 200
 line_down = 230
 
-up_limit = 140
-down_limit = 290
+up_limit = 120
+down_limit = 310
 
 #up_limit =   int(1*(h/5))
 #down_limit = int(4*(h/5))
@@ -84,12 +85,12 @@ pt2 =  [w, line_down];
 pts_L1 = np.array([pt1,pt2], np.int32)
 pts_L1 = pts_L1.reshape((-1,1,2))
 pt3 =  [0, line_up];
-pt4 =  [w, line_up];
+pt4 =  [800, line_up];
 pts_L2 = np.array([pt3,pt4], np.int32)
 pts_L2 = pts_L2.reshape((-1,1,2))
 
 pt5 =  [0, up_limit];
-pt6 =  [w, up_limit];
+pt6 =  [800, up_limit];
 pts_L3 = np.array([pt5,pt6], np.int32)
 pts_L3 = pts_L3.reshape((-1,1,2))
 pt7 =  [0, down_limit];
@@ -110,6 +111,8 @@ pid = 1
 
 while(cap.isOpened()):
     ret, frame = cap.read()
+
+    frame = imutils.resize(frame, width=800)
 
     for i in persons:
         i.age_one() 
@@ -178,8 +181,8 @@ while(cap.isOpened()):
                     p = Person.MyPerson(pid,cx,cy, max_p_age)
                     persons.append(p)
                     pid += 1     
-            cv.circle(frame,(cx,cy), 5, (0,0,255), -1)
-          #   img = cv.rectangle(frame,(x,y),(x+w,y+h),(0,255,0),2)            
+            cv.circle(frame,(cx,cy), 5, (255,255,255), -1)
+           #img = cv.rectangle(frame,(x,y),(x+w,y+h),(0,255,0),2)            
             
     for i in persons:
         cv.putText(frame, str(i.getId()),(i.getX(),i.getY()),font,0.3,i.getRGB(),1,cv.LINE_AA)
